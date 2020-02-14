@@ -27,13 +27,18 @@
         scene!: THREE.Scene;
         controls!: any;
         renderer!: THREE.WebGLRenderer;
-        camera!: THREE.Camera;
+        camera!: THREE.PerspectiveCamera;
 
 
         mounted() {
             this.init();
             this.animate();
+            window.addEventListener("resize", this.onWindowResize)
         }
+
+      destroyed() {
+        window.removeEventListener("resize", this.onWindowResize);
+      }
 
         private init() {
             let rendererFactory = new Renderer();
@@ -77,6 +82,13 @@
             this.controls.update()
             this.renderer.render(this.scene, this.camera);
         }
+
+       onWindowResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+      }
+
 
     }
 </script>
