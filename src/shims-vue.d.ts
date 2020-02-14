@@ -4,3 +4,5 @@ declare module '*.vue' {
 }
 
 declare module 'stats-js';
+
+declare module 'three-orbitcontrols'

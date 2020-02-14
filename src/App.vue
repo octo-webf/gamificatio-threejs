@@ -1,64 +1,84 @@
 <template>
-  <div ref="app" id="app">
-    <FrameStats/>
-  </div>
+    <div ref="app" id="app">
+        <FrameStats/>
+    </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Renderer from "@/ThreeObjects/Renderer";
-import Camera from "@/ThreeObjects/Camera";
-import Cube from "@/ThreeObjects/Cube";
-import LightBulb from "@/ThreeObjects/LightBulb";
-import Ground from "@/ThreeObjects/Ground";
-import Scene from "@/ThreeObjects/Scene";
-import SunLight from "@/ThreeObjects/SunLight";
-import FrameStats from "@/components/FrameStats.vue";
+    import * as THREE from 'three';
+    import OrbitControls from 'three-orbitcontrols'
+    import {Component, Vue} from 'vue-property-decorator';
+    import Renderer from "@/ThreeObjects/Renderer";
+    import Camera from "@/ThreeObjects/Camera";
+    import Cube from "@/ThreeObjects/Cube";
+    import LightBulb from "@/ThreeObjects/LightBulb";
+    import Ground from "@/ThreeObjects/Ground";
+    import Scene from "@/ThreeObjects/Scene";
+    import SunLight from "@/ThreeObjects/SunLight";
+    import FrameStats from "@/components/FrameStats.vue";
 
-@Component({
-  components: {
-    FrameStats
-  },
-})
-export default class App extends Vue {
+    @Component({
+        components: {
+            FrameStats
+        },
+    })
+    export default class App extends Vue {
 
-  mounted() {
-    let rendererFactory = new Renderer();
-    let renderer = rendererFactory.init();
+        scene!: THREE.Scene;
+        controls!: any;
+        renderer!: THREE.WebGLRenderer;
+        camera!: THREE.Camera;
 
-    let app = this.$refs.app as Element;
-    app.appendChild(renderer.domElement);
 
-    let cameraFactory = new Camera();
-    let camera = cameraFactory.init();
+        mounted() {
+            this.init();
+            this.animate();
+        }
 
-    let cubeFactory = new Cube();
-    let cube = cubeFactory.init();
+        private init() {
+            let rendererFactory = new Renderer();
+            this.renderer = rendererFactory.init();
 
-    let lightBulbFactory = new LightBulb();
-    let lightBulbHolder = lightBulbFactory.initLightHolder();
-    let lightBulbSphere = lightBulbFactory.initLightSphere();
+            let app = this.$refs.app as Element;
+            app.appendChild(this.renderer.domElement);
 
-    let groundFactory = new Ground();
-    let ground = groundFactory.init();
+            let cameraFactory = new Camera();
+            this.camera = cameraFactory.init();
 
-    let sceneFactory = new Scene();
-    let scene = sceneFactory.init();
+            let cubeFactory = new Cube();
+            let cube = cubeFactory.init();
 
-    let sunLightFactory = new SunLight(scene);
-    let sunLight = sunLightFactory.init();
+            let lightBulbFactory = new LightBulb();
+            let lightBulbHolder = lightBulbFactory.initLightHolder();
+            let lightBulbSphere = lightBulbFactory.initLightSphere();
 
-    scene.add(camera);
-    scene.add(cube);
-    scene.add(lightBulbHolder);
-    scene.add(lightBulbSphere);
-    scene.add(ground);
-    scene.add(sunLight);
+            let groundFactory = new Ground();
+            let ground = groundFactory.init();
 
-    renderer.render(scene, camera);
-  }
+            let sceneFactory = new Scene();
+            this.scene = sceneFactory.init();
 
-}
+            let sunLightFactory = new SunLight(this.scene);
+            let sunLight = sunLightFactory.init();
+
+            this.scene.add(this.camera);
+            this.scene.add(cube);
+            this.scene.add(lightBulbHolder);
+            this.scene.add(lightBulbSphere);
+            this.scene.add(ground);
+            this.scene.add(sunLight);
+
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+            this.controls.update();
+        }
+
+        animate() {
+            requestAnimationFrame(this.animate)
+            this.controls.update()
+            this.renderer.render(this.scene, this.camera);
+        }
+
+    }
 </script>
 
 <style lang="scss">
