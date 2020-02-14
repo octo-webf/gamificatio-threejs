@@ -1,11 +1,11 @@
 <template>
   <div ref="app" id="app">
+    <FrameStats/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import * as THREE from 'three';
 import Renderer from "@/ThreeObjects/Renderer";
 import Camera from "@/ThreeObjects/Camera";
 import Cube from "@/ThreeObjects/Cube";
@@ -13,13 +13,14 @@ import LightBulb from "@/ThreeObjects/LightBulb";
 import Ground from "@/ThreeObjects/Ground";
 import Scene from "@/ThreeObjects/Scene";
 import SunLight from "@/ThreeObjects/SunLight";
+import FrameStats from "@/components/FrameStats.vue";
 
 @Component({
   components: {
+    FrameStats
   },
 })
 export default class App extends Vue {
-
 
   mounted() {
     let rendererFactory = new Renderer();
