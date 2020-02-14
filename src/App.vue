@@ -60,6 +60,8 @@
             let groundFactory = new Ground();
             let ground = groundFactory.init();
 
+            let route = groundFactory.initRoute();
+
             let sceneFactory = new Scene();
             this.scene = sceneFactory.init();
 
@@ -72,6 +74,7 @@
             this.scene.add(lightBulbSphere);
             this.scene.add(ground);
             this.scene.add(sunLight);
+            this.scene.add(route)
 
             this.controls = new OrbitControls(this.camera, this.renderer.domElement)
             this.controls.update();
