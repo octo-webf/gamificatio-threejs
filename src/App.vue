@@ -72,7 +72,8 @@
             this.scene.add(cube);
             this.scene.add(lightBulbHolder);
             this.scene.add(lightBulbSphere);
-            this.scene.add(ground);
+
+            //this.scene.add(ground);
             this.scene.add(sunLight);
             this.scene.add(route)
 

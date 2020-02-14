@@ -2,10 +2,12 @@ import * as THREE from 'three';
 
 class Ground {
     init(): THREE.Mesh {
+        const textureLoader = new THREE.TextureLoader();
+
         const groundGeometry = new THREE.BoxBufferGeometry(30, 0.01, 40)
         const groundMaterial = new THREE.MeshLambertMaterial()
 
-        const textureLoader = new THREE.TextureLoader();
+
         textureLoader.load("./img/herbe.jpg", function (map) {
             console.log("loaded Grounded", map);
             map.wrapS = THREE.RepeatWrapping;
@@ -27,28 +29,54 @@ class Ground {
     }
 
     initRoute(): THREE.Mesh {
-        const groundGeometry = new THREE.BoxBufferGeometry(2, 0.01, 40)
-        const groundMaterial = new THREE.MeshLambertMaterial()
-
         const textureLoader = new THREE.TextureLoader();
-        textureLoader.load("./img/sky1.jpg", function (map) {
-            console.log("loaded Grounded", map);
+        let floorMat = new THREE.MeshStandardMaterial( {
+            roughness: 0.8,
+            color: 0xffffff,
+            metalness: 0.2,
+            bumpScale: 0.0005
+        } );
+
+        var floorGeometry = new THREE.PlaneBufferGeometry( 20, 20 );
+
+
+        textureLoader.load( "./img/hardwood2_diffuse.jpg", function ( map ) {
+
             map.wrapS = THREE.RepeatWrapping;
             map.wrapT = THREE.RepeatWrapping;
             map.anisotropy = 4;
-            map.repeat.set(24, 24);
-            groundMaterial.map = map;
-            groundMaterial.needsUpdate = true;
-        }, ()=>{
+            map.repeat.set( 10, 24 );
+            map.encoding = THREE.sRGBEncoding;
+            floorMat.map = map;
+            floorMat.needsUpdate = true;
 
-        }, (error)=> {
-            console.error(error)
-        });
+        } );
+        textureLoader.load( "./img/hardwood2_bump.jpg", function ( map ) {
 
-        const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial)
-        groundMesh.position.y = 0.1  //this value must be slightly lower than the planeConstant (0.01) parameter above
+            map.wrapS = THREE.RepeatWrapping;
+            map.wrapT = THREE.RepeatWrapping;
+            map.anisotropy = 4;
+            map.repeat.set( 10, 24 );
+            floorMat.bumpMap = map;
+            floorMat.needsUpdate = true;
 
-        return groundMesh;
+        } );
+        textureLoader.load( "./img/hardwood2_roughness.jpg", function ( map ) {
+
+            map.wrapS = THREE.RepeatWrapping;
+            map.wrapT = THREE.RepeatWrapping;
+            map.anisotropy = 4;
+            map.repeat.set( 10, 24 );
+            floorMat.roughnessMap = map;
+            floorMat.needsUpdate = true;
+
+        } );
+
+        var floorMesh = new THREE.Mesh( floorGeometry, floorMat );
+        floorMesh.receiveShadow = true;
+        floorMesh.rotation.x = - Math.PI / 2.0;
+
+        return floorMesh;
 
     }
 }
