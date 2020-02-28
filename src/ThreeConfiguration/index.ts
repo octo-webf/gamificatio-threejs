@@ -1,4 +1,4 @@
-import CameraFactory from './CameraFactory'
+import CameraConfiguration from './CameraConfiguration'
 import SceneFactory from './SceneFactory'
 import RendererFactory from '@/ThreeConfiguration/RendererFactory'
 import CubeConfiguration from '@/ThreeConfiguration/CubeConfiguration'
@@ -7,7 +7,7 @@ import LightConfiguration from '@/ThreeConfiguration/LightConfiguration'
 import PlayerConfiguration from '@/ThreeConfiguration/PlayerConfiguration'
 
 export const rendererFactory = new RendererFactory();
-export const cameraFactory = new CameraFactory();
+export const cameraConfiguration = new CameraConfiguration();
 export const sceneFactory = new SceneFactory();
 
 

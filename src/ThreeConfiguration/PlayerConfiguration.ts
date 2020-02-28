@@ -4,6 +4,11 @@ class PlayerConfiguration {
 
   public textureLoader!: THREE.TextureLoader;
 
+  public playerMesh!: THREE.Mesh
+
+  public moveDistance = 0.08;
+  public rotateAngle = 90
+
   constructor() {
     this.textureLoader = new THREE.TextureLoader();
   }
@@ -12,11 +17,11 @@ class PlayerConfiguration {
     const playerMat = this.createPlayerMat();
     const boxGeometry = this.createBoxGeometry();
 
-    const player = new THREE.Mesh( boxGeometry, playerMat );
-    player.position.set( 0, 0.25, 8 );
-    player.rotation.y = Math.PI;
-    player.castShadow = true;
-    scene.add( player );
+    this.playerMesh = new THREE.Mesh( boxGeometry, playerMat );
+    this.playerMesh.position.set( 0, 0.25, 8 );
+    this.playerMesh.rotation.y = Math.PI;
+    this.playerMesh.castShadow = true;
+    scene.add( this.playerMesh );
   }
 
   private createPlayerMat() {
@@ -27,6 +32,22 @@ class PlayerConfiguration {
     } );
     this.loadTextures(ballMat);
     return ballMat;
+  }
+
+  updateLeft(){
+    this.playerMesh.rotateOnAxis( new THREE.Vector3(0,1,0), -this.rotateAngle);
+  }
+
+  updateRight(){
+    this.playerMesh.rotateOnAxis( new THREE.Vector3(0,1,0), this.rotateAngle);
+  }
+
+  updateTop(){
+    this.playerMesh.translateZ(this.moveDistance)
+  }
+
+  updateBottom(){
+    this.playerMesh.translateZ(-this.moveDistance)
   }
 
   private createBoxGeometry() {

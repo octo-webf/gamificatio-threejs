@@ -10,7 +10,7 @@
   import {Component, Vue} from 'vue-property-decorator';
   import FrameStats from '@/components/FrameStats.vue';
   import {
-    cameraFactory,
+    cameraConfiguration,
     cubeConfiguration,
     floorConfiguration,
     lightConfiguration, playerConfiguration,
@@ -32,12 +32,35 @@
 
     public mounted() {
       this.init();
+      cameraConfiguration.followObject(playerConfiguration.playerMesh)
       this.animate();
       window.addEventListener('resize', this.onWindowResize);
+      window.addEventListener("keydown", this.keydown);
+    }
+
+    keydown(e: any){
+      console.log(e.key);
+      switch (e.key) {
+        case "ArrowLeft":
+          playerConfiguration.updateLeft()
+          cameraConfiguration.followObject(playerConfiguration.playerMesh)
+          break;
+        case "ArrowRight":
+          playerConfiguration.updateRight()
+          cameraConfiguration.followObject(playerConfiguration.playerMesh)
+          break;
+        case "ArrowUp":
+          playerConfiguration.updateTop()
+          break;
+        case "ArrowDown":
+          playerConfiguration.updateBottom()
+          break;
+      }
     }
 
     public destroyed() {
       window.removeEventListener('resize', this.onWindowResize);
+      window.addEventListener("keydown", (event) => this.keydown);
     }
 
     public onWindowResize() {
@@ -55,7 +78,7 @@
     private init() {
       this.createRenderer();
 
-      this.camera = cameraFactory.createCamera();
+      this.camera = cameraConfiguration.createCamera();
       this.scene = sceneFactory.createScene();
 
       floorConfiguration.addFloorInScene(this.scene)

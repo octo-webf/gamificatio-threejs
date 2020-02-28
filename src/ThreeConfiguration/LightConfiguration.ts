@@ -18,6 +18,9 @@ class LightConfiguration {
 
     const hemiLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 0.02 );
     scene.add(hemiLight)
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight)
   }
 }
 
