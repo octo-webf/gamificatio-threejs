@@ -6,7 +6,6 @@
 
 <script lang="ts">
   import * as THREE from 'three';
-  import OrbitControls from 'three-orbitcontrols';
   import {Component, Vue} from 'vue-property-decorator';
   import FrameStats from '@/components/FrameStats.vue';
   import {
@@ -32,35 +31,24 @@
 
     public mounted() {
       this.init();
-      cameraConfiguration.followObject(playerConfiguration.playerMesh)
       this.animate();
       window.addEventListener('resize', this.onWindowResize);
       window.addEventListener("keydown", this.keydown);
+      window.addEventListener("keyup", this.keyup);
     }
 
     keydown(e: any){
-      console.log(e.key);
-      switch (e.key) {
-        case "ArrowLeft":
-          playerConfiguration.updateLeft()
-          cameraConfiguration.followObject(playerConfiguration.playerMesh)
-          break;
-        case "ArrowRight":
-          playerConfiguration.updateRight()
-          cameraConfiguration.followObject(playerConfiguration.playerMesh)
-          break;
-        case "ArrowUp":
-          playerConfiguration.updateTop()
-          break;
-        case "ArrowDown":
-          playerConfiguration.updateBottom()
-          break;
-      }
+      playerConfiguration.pressed[e.key.toUpperCase()] = true;
+    }
+
+    keyup(e: any){
+      playerConfiguration.pressed[e.key.toUpperCase()] = false;
     }
 
     public destroyed() {
       window.removeEventListener('resize', this.onWindowResize);
-      window.addEventListener("keydown", (event) => this.keydown);
+      window.removeEventListener("keydown", this.keydown);
+      window.removeEventListener("keyup", this.keyup);
     }
 
     public onWindowResize() {
@@ -71,8 +59,10 @@
 
     public animate() {
       requestAnimationFrame(this.animate);
-      this.controls.update();
+      //this.controls.update();
       this.renderer.render(this.scene, this.camera);
+      playerConfiguration.movePlayer()
+      cameraConfiguration.followObject(playerConfiguration.sphereGroup)
     }
 
     private init() {
@@ -80,6 +70,7 @@
 
       this.camera = cameraConfiguration.createCamera();
       this.scene = sceneFactory.createScene();
+      //this.camera.lookAt(this.scene.position);
 
       floorConfiguration.addFloorInScene(this.scene)
       cubeConfiguration.configCubeInScene(this.scene)
@@ -88,9 +79,8 @@
 
       this.scene.add(this.camera);
 
-
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.controls.update();
+      //this.controls = cameraConfiguration.getControls(this.renderer)
+      //this.controls.update();
     }
 
     private createRenderer() {

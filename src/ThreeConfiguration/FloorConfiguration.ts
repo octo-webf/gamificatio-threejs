@@ -21,10 +21,12 @@ class FloorConfiguration {
       bumpScale: 0.0005,
     } );
 
-    const floorGeometry = new THREE.PlaneBufferGeometry( 20, 20 );
+    const floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
     this.loadTextures(floorMat);
 
     const floorMesh = new THREE.Mesh( floorGeometry, floorMat );
+    floorMesh.position.y = -0.5;
+    floorMesh.rotation.x = Math.PI / 2;
     floorMesh.receiveShadow = true;
     floorMesh.rotation.x = - Math.PI / 2.0;
 
