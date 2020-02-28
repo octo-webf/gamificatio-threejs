@@ -4,7 +4,7 @@ class LightConfiguration {
 
   public addLightInScene(scene: THREE.Scene) {
     const bulbGeometry = new THREE.SphereBufferGeometry( 0.02, 16, 8 );
-    const bulbLight = new THREE.PointLight( 0xffee88, 1, 100, 2 );
+    const bulbLight = new THREE.PointLight( 0xffee88, 30, 100, 2 );
 
     const bulbMat = new THREE.MeshStandardMaterial( {
       emissive: 0xffffee,
