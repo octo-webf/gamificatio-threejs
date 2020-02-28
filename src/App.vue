@@ -11,12 +11,12 @@
   import FrameStats from '@/components/FrameStats.vue';
   import {
     cameraFactory,
-    cubeFactory,
-    groundFactory,
-    lightBulbFactory, rendererFactory,
+    cubeConfiguration,
+    floorConfiguration,
+    lightConfiguration,
+    rendererFactory,
     sceneFactory,
-    sunLightFactory
-  } from '@/ThreeObjects';
+  } from '@/ThreeConfiguration';
 
   @Component({
     components: {
@@ -56,28 +56,15 @@
       this.createRenderer();
 
       this.camera = cameraFactory.createCamera();
-
-      const cube = cubeFactory.createCube();
-
-      const lightBulbHolder = lightBulbFactory.createLightHolder();
-      const lightBulbSphere = lightBulbFactory.createLightSphere();
-
-      const ground = groundFactory.createGround();
-
-      const route = groundFactory.initRoute();
-
       this.scene = sceneFactory.createScene();
 
-      const sunLight = sunLightFactory.createSunLight(this.scene);
+      floorConfiguration.addFloorInScene(this.scene)
+      cubeConfiguration.configCubeInScene(this.scene)
+      lightConfiguration.addLightInScene(this.scene)
+
 
       this.scene.add(this.camera);
-      this.scene.add(cube);
-      this.scene.add(lightBulbHolder);
-      this.scene.add(lightBulbSphere);
 
-      this.scene.add(ground);
-      this.scene.add(sunLight);
-      this.scene.add(route);
 
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       this.controls.update();
