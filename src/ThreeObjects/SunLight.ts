@@ -6,7 +6,7 @@ class SunLight {
         this.scene = scene;
     }
 
-    init(): THREE.DirectionalLight {
+    public init(): THREE.DirectionalLight {
         const sunLight = new THREE.DirectionalLight('rgb(255,255,255)', 1);
         sunLight.position.set(5, 7, -1);
         sunLight.lookAt(this.scene.position);

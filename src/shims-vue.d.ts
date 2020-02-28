@@ -5,4 +5,4 @@ declare module '*.vue' {
 
 declare module 'stats-js';
 
-declare module 'three-orbitcontrols'
+declare module 'three-orbitcontrols';
