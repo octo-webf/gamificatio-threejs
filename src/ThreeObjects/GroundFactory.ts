@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-class Ground {
-    public init(): THREE.Mesh {
+class GroundFactory {
+    public createGround(): THREE.Mesh {
         const textureLoader = new THREE.TextureLoader();
 
         const groundGeometry = new THREE.BoxBufferGeometry(30, 0.01, 40);
@@ -78,4 +78,4 @@ class Ground {
     }
 }
 
-export default Ground;
+export default GroundFactory;

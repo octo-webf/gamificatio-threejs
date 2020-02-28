@@ -1,15 +1,15 @@
 import * as THREE from 'three';
 
-class LightBulb {
+class LightBulbFactory {
 
-    public initLightSphere(): THREE.Mesh {
+    public createLightSphere(): THREE.Mesh {
         const lightSphereGeometry = new THREE.SphereBufferGeometry(0.09);
         const lightSphereMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255,255,255)' });
 
         return new THREE.Mesh(lightSphereGeometry, lightSphereMaterial);
     }
 
-    public initLightHolder(): THREE.Mesh {
+    public createLightHolder(): THREE.Mesh {
         const lightHolderGeometry = new THREE.CylinderBufferGeometry(0.05, 0.05, 0.13);
         const lightHolderMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(75,75,75)' });
 
@@ -17,4 +17,4 @@ class LightBulb {
     }
 }
 
-export default LightBulb;
+export default LightBulbFactory;

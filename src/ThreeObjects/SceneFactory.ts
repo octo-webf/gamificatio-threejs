@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
-class Scene {
+class SceneFactory {
 
-    public init(): THREE.Scene {
+    public createScene(): THREE.Scene {
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0096ff);
 
@@ -10,4 +10,4 @@ class Scene {
     }
 }
 
-export default Scene;
+export default SceneFactory;

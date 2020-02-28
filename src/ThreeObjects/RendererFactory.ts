@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
-class Renderer {
+class RendererFactory {
     public SCREEN_WIDTH: number = window.innerWidth;
     public SCREEN_HEIGHT: number = window.innerHeight;
 
-    public init(): THREE.WebGLRenderer {
+    public createRenderer(): THREE.WebGLRenderer {
         const renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -13,4 +13,4 @@ class Renderer {
     }
 }
 
-export default Renderer;
+export default RendererFactory;
