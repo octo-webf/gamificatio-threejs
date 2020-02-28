@@ -13,7 +13,7 @@
     cameraFactory,
     cubeConfiguration,
     floorConfiguration,
-    lightConfiguration,
+    lightConfiguration, playerConfiguration,
     rendererFactory,
     sceneFactory,
   } from '@/ThreeConfiguration';
@@ -61,7 +61,7 @@
       floorConfiguration.addFloorInScene(this.scene)
       cubeConfiguration.configCubeInScene(this.scene)
       lightConfiguration.addLightInScene(this.scene)
-
+      playerConfiguration.configPlayerInScene(this.scene)
 
       this.scene.add(this.camera);
 

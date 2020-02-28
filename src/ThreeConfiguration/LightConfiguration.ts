@@ -12,7 +12,7 @@ class LightConfiguration {
       color: 0x000000
     } );
     bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-    bulbLight.position.set( 0, 2, 0 );
+    bulbLight.position.set( 0, 8, 0 );
     bulbLight.castShadow = true;
     scene.add(bulbLight)
 

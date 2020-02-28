@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-class CubeConfiguration {
+class PlayerConfiguration {
 
   public textureLoader!: THREE.TextureLoader;
 
@@ -8,7 +8,7 @@ class CubeConfiguration {
     this.textureLoader = new THREE.TextureLoader();
   }
 
-  private createCubeMat() {
+  private createPlayerMat() {
     const cubeMat = new THREE.MeshStandardMaterial({
       roughness: 0.7,
       color: 0xffffff,
@@ -19,32 +19,22 @@ class CubeConfiguration {
     return cubeMat
   }
 
-  public configCubeInScene(scene: THREE.Scene){
-    const cubeMat = this.createCubeMat()
+  public configPlayerInScene(scene: THREE.Scene){
+    const playerMat = this.createPlayerMat()
     const boxGeometry = this.createBoxGeometry()
 
-    const boxMesh = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh.position.set( - 4, 2, - 1 );
-    boxMesh.castShadow = true;
-    scene.add( boxMesh );
-
-    const boxMesh2 = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh2.position.set( 0, 2, - 5 );
-    boxMesh2.castShadow = true;
-    scene.add( boxMesh2 );
-
-    const boxMesh3 = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh3.position.set( 4, 2, 0 );
-    boxMesh3.castShadow = true;
-    scene.add( boxMesh3 );
+    const player = new THREE.Mesh( boxGeometry, playerMat );
+    player.position.set( 0, 0.25, 8 );
+    player.castShadow = true;
+    scene.add( player );
   }
 
   private createBoxGeometry() {
-    const boxGeometry = new THREE.BoxBufferGeometry(3, 6, 3);
+    const boxGeometry = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5);
     return boxGeometry
   }
 
-  private loadTextures(cubeMat: THREE.MeshStandardMaterial) {
+  private loadTextures(player: THREE.MeshStandardMaterial) {
     this.textureLoader.load('./textures/brick_diffuse.jpg', function (map) {
 
       map.wrapS = THREE.RepeatWrapping;
@@ -52,8 +42,8 @@ class CubeConfiguration {
       map.anisotropy = 4;
       map.repeat.set(1, 1);
       map.encoding = THREE.sRGBEncoding;
-      cubeMat.map = map;
-      cubeMat.needsUpdate = true;
+      player.map = map;
+      player.needsUpdate = true;
 
     });
     this.textureLoader.load('./textures/brick_bump.jpg', function (map) {
@@ -62,10 +52,10 @@ class CubeConfiguration {
       map.wrapT = THREE.RepeatWrapping;
       map.anisotropy = 4;
       map.repeat.set(1, 1);
-      cubeMat.bumpMap = map;
-      cubeMat.needsUpdate = true;
+      player.bumpMap = map;
+      player.needsUpdate = true;
     });
   }
 }
 
-export default CubeConfiguration;
+export default PlayerConfiguration;
