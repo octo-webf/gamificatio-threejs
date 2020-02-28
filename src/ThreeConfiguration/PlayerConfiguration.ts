@@ -8,53 +8,48 @@ class PlayerConfiguration {
     this.textureLoader = new THREE.TextureLoader();
   }
 
-  private createPlayerMat() {
-    const cubeMat = new THREE.MeshStandardMaterial({
-      roughness: 0.7,
-      color: 0xffffff,
-      bumpScale: 0.002,
-      metalness: 0.2,
-    });
-    this.loadTextures(cubeMat)
-    return cubeMat
-  }
-
-  public configPlayerInScene(scene: THREE.Scene){
-    const playerMat = this.createPlayerMat()
-    const boxGeometry = this.createBoxGeometry()
+  public configPlayerInScene(scene: THREE.Scene) {
+    const playerMat = this.createPlayerMat();
+    const boxGeometry = this.createBoxGeometry();
 
     const player = new THREE.Mesh( boxGeometry, playerMat );
     player.position.set( 0, 0.25, 8 );
+    player.rotation.y = Math.PI;
     player.castShadow = true;
     scene.add( player );
   }
 
+  private createPlayerMat() {
+    const ballMat = new THREE.MeshStandardMaterial( {
+      color: 0xffffff,
+      roughness: 0.5,
+      metalness: 1.0,
+    } );
+    this.loadTextures(ballMat);
+    return ballMat;
+  }
+
   private createBoxGeometry() {
-    const boxGeometry = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5);
-    return boxGeometry
+    const boxGeometry = new THREE.SphereBufferGeometry( 0.25, 32, 32 );
+    return boxGeometry;
   }
 
   private loadTextures(player: THREE.MeshStandardMaterial) {
-    this.textureLoader.load('./textures/brick_diffuse.jpg', function (map) {
+    this.textureLoader.load( 'textures/octo.png', function( map ) {
 
-      map.wrapS = THREE.RepeatWrapping;
-      map.wrapT = THREE.RepeatWrapping;
       map.anisotropy = 4;
-      map.repeat.set(1, 1);
       map.encoding = THREE.sRGBEncoding;
       player.map = map;
       player.needsUpdate = true;
 
-    });
-    this.textureLoader.load('./textures/brick_bump.jpg', function (map) {
-
-      map.wrapS = THREE.RepeatWrapping;
-      map.wrapT = THREE.RepeatWrapping;
+    } );
+    this.textureLoader.load( 'textures/octo.png', function( map ) {
       map.anisotropy = 4;
-      map.repeat.set(1, 1);
-      player.bumpMap = map;
+      map.encoding = THREE.sRGBEncoding;
+      player.metalnessMap = map;
       player.needsUpdate = true;
-    });
+
+    } );
   }
 }
 
