@@ -10,6 +10,11 @@ class PlayerConfiguration {
 
   public pressed: any= {};
 
+  public LEFT_KEY = 'ARROWLEFT'
+  public RIGHT_KEY = 'ARROWRIGHT'
+  public TOP_KEY = 'ARROWUP'
+  public BOTTOM_KEY = 'ARROWDOWN'
+
   constructor(clock: THREE.Clock) {
     this.textureLoader = new THREE.TextureLoader();
     this.clock = clock
@@ -26,7 +31,7 @@ class PlayerConfiguration {
     this.sphereGroup = new THREE.Group();
     this.sphereGroup.add(this.playerMesh)
     this.sphereGroup.castShadow = true;
-    this.sphereGroup.position.set(0, 24, 100);
+    this.sphereGroup.position.set(0, 0.25, 100);
     this. sphereGroup.receiveShadow = false;
     scene.add( this.sphereGroup);
   }
@@ -43,36 +48,24 @@ class PlayerConfiguration {
 
   movePlayer() {
     const delta = this.clock.getDelta(); // seconds
-    const moveDistance = 200 * delta; // 200 pixels per second
+    const moveDistance = 20 * delta; // 200 pixels per second
     const rotateAngle = Math.PI / 2 * delta; // pi/2 radians (90 deg) per sec
 
-    console.log('delta', delta)
-    console.log('this.pressed[\'W\']', this.pressed['W'])
-
-    // move forwards/backwards/left/right
-    if ( this.pressed['W'] ) {
+    if ( this.pressed[this.TOP_KEY] ) {
       this.playerMesh.rotateOnAxis(new THREE.Vector3(1,0,0), -rotateAngle)
       this.sphereGroup.translateZ( -moveDistance );
-    }
-    if ( this.pressed['S'] )
-      this.sphereGroup.translateZ(  moveDistance );
-    if ( this.pressed['Q'] )
-      this.sphereGroup.translateX( -moveDistance );
-    if ( this.pressed['E'] )
-      this.sphereGroup.translateX(  moveDistance );
-
-    if ( this.pressed['A'] )
-      this.sphereGroup.rotateOnAxis(new THREE.Vector3(0,1,0), rotateAngle);
-    if ( this.pressed['D'] )
+    } else if( this.pressed[this.BOTTOM_KEY] ) {
+      this.playerMesh.rotateOnAxis(new THREE.Vector3(-1,0,0), rotateAngle)
+      this.sphereGroup.translateZ( moveDistance );
+    }else if( this.pressed[this.LEFT_KEY] ) {
+      this.sphereGroup.rotateOnAxis(new THREE.Vector3(0,-1,0), -rotateAngle);
+    }else if( this.pressed[this.RIGHT_KEY] ) {
       this.sphereGroup.rotateOnAxis(new THREE.Vector3(0,1,0), -rotateAngle);
-    if ( this.pressed['R'] )
-      this.sphereGroup.rotateOnAxis(new THREE.Vector3(1,0,0), rotateAngle);
-    if ( this.pressed['F'] )
-      this.sphereGroup.rotateOnAxis(new THREE.Vector3(1,0,0), -rotateAngle);
+    }
   }
 
   private createBoxGeometry() {
-    const boxGeometry = new THREE.SphereBufferGeometry( 30, 12, 9 );
+    const boxGeometry = new THREE.SphereBufferGeometry( 1, 12, 9 );
     return boxGeometry;
   }
 

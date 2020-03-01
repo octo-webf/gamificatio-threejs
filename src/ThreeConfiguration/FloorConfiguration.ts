@@ -35,33 +35,31 @@ class FloorConfiguration {
 
   private loadTextures(floorMat: THREE.MeshStandardMaterial) {
     this.textureLoader.load('./img/hardwood2_diffuse.jpg', (map) => {
-      map.wrapS = THREE.RepeatWrapping;
-      map.wrapT = THREE.RepeatWrapping;
-      map.anisotropy = 4;
-      map.repeat.set(10, 24);
+      this.repeatTexture(map)
       map.encoding = THREE.sRGBEncoding;
       floorMat.map = map;
       floorMat.needsUpdate = true;
 
     });
     this.textureLoader.load('./img/hardwood2_bump.jpg', (map) => {
-      map.wrapS = THREE.RepeatWrapping;
-      map.wrapT = THREE.RepeatWrapping;
-      map.anisotropy = 4;
-      map.repeat.set(10, 24);
+      this.repeatTexture(map)
       floorMat.bumpMap = map;
       floorMat.needsUpdate = true;
 
     });
     this.textureLoader.load('./img/hardwood2_roughness.jpg', (map) => {
-      map.wrapS = THREE.RepeatWrapping;
-      map.wrapT = THREE.RepeatWrapping;
-      map.anisotropy = 4;
-      map.repeat.set(10, 24);
+      this.repeatTexture(map)
       floorMat.roughnessMap = map;
       floorMat.needsUpdate = true;
 
     });
+  }
+
+  private repeatTexture(map: THREE.Texture) {
+    map.wrapS = THREE.RepeatWrapping;
+    map.wrapT = THREE.RepeatWrapping;
+    map.anisotropy = 4;
+    map.repeat.set(50, 120);
   }
 }
 

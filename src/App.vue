@@ -70,7 +70,6 @@
 
       this.camera = cameraConfiguration.createCamera();
       this.scene = sceneFactory.createScene();
-      //this.camera.lookAt(this.scene.position);
 
       floorConfiguration.addFloorInScene(this.scene)
       cubeConfiguration.configCubeInScene(this.scene)

@@ -24,23 +24,23 @@ class CubeConfiguration {
     const boxGeometry = this.createBoxGeometry()
 
     const boxMesh = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh.position.set( - 4, 2, - 1 );
+    boxMesh.position.set( - 60, 2, - 1 );
     boxMesh.castShadow = true;
     scene.add( boxMesh );
 
     const boxMesh2 = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh2.position.set( 0, 2, - 5 );
+    boxMesh2.position.set( 0, 2, - 50 );
     boxMesh2.castShadow = true;
     scene.add( boxMesh2 );
 
     const boxMesh3 = new THREE.Mesh( boxGeometry, cubeMat );
-    boxMesh3.position.set( 4, 2, 0 );
+    boxMesh3.position.set( 60, 2, 0 );
     boxMesh3.castShadow = true;
     scene.add( boxMesh3 );
   }
 
   private createBoxGeometry() {
-    const boxGeometry = new THREE.BoxBufferGeometry(3, 6, 3);
+    const boxGeometry = new THREE.BoxBufferGeometry(30, 60, 30);
     return boxGeometry
   }
 
